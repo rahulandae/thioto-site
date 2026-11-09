@@ -238,6 +238,17 @@ html.is-sky .nav-meta{color:var(--c-fg-muted)}
 .infobody p{margin:0 0 16px;line-height:1.55;font-size:18px;max-width:60ch}
 .nav .brand{display:inline-block;transform-origin:50% 100%;will-change:transform}
 @media (width<=809px){.buy{font-size:17px;padding:20px 52px;bottom:calc(64px + env(safe-area-inset-bottom,0px));box-shadow:0 14px 30px -12px #1f5bff99}.footer{padding-bottom:180px}}
+
+/* single THIOTO wordmark + clear scroll cue */
+.word{left:var(--m);right:var(--m);text-align:center;z-index:4;font-size:clamp(120px,21vw,420px)}
+.hero-hint{right:var(--m);left:auto;top:88px;bottom:auto;max-width:none!important;text-align:center!important;white-space:nowrap;z-index:5;display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--c-ink,#141217);color:#fff;padding:10px 18px 6px;border-radius:999px;font-size:14px;font-weight:600;letter-spacing:.02em}
+.hero-hint .hh-a{font-size:22px;line-height:1;animation:hhb 1.2s ease-in-out infinite}
+.hero-hint .touch{display:none}
+@keyframes hhb{0%,100%{transform:translateY(-2px)}50%{transform:translateY(5px)}}
+@media (hover:none),(pointer:coarse){.hero-hint .desk{display:none}.hero-hint .touch{display:inline}}
+@media (width<=809px){.word{font-size:23vw}.hero-caption{max-width:46%;bottom:20px;font-size:11px}.hero-hint{left:50%;right:auto;top:auto;bottom:140px;transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.hero-hint .hh-a{animation:none}}
+.word{color:#e0312b}
 </style>
 
 <header class="nav small" data-nav>
@@ -283,10 +294,9 @@ html.is-sky .nav-meta{color:var(--c-fg-muted)}
         <span class="item" data-item="cap"></span>
         <span class="item" data-item="filter"></span>
       </div>
-      <div class="word word--l" aria-hidden="true">thi</div>
-      <div class="word word--r" aria-hidden="true">oto</div>
+      <div class="word" aria-hidden="true">thioto</div>
       <h1 class="hero-caption small">THIOTO closet air purifier. <span class="desk">Move your cursor: it's watching.</span></h1>
-      <p class="hero-hint small">Scroll to turn it around ↓</p>
+      <p class="hero-hint"><span class="hh-t"><span class="desk">Scroll down</span><span class="touch">Swipe up</span> to turn it around</span><span class="hh-a" aria-hidden="true">↓</span></p>
       <p class="side side--l">one full turn<small>front, loop side, back, other side</small></p>
       <p class="side side--r">hangs in your closet<small>from its own loop</small></p>
       <div class="tags" data-tags></div>
@@ -559,7 +569,7 @@ function tick(now) {
 
   // words slide apart, captions fade
   const k2 = clamp(s / (HOLD * vh + TRAVEL * vh * .2));
-  words[0].style.transform = `translateX(${-k2 * 40}vw)`; words[1].style.transform = `translateX(${k2 * 40}vw)`;
+  words[0].style.transform = `translateY(${(k2 * 30).toFixed(1)}vh)`; words[0].style.opacity = String(1 - k2);
   caption.style.opacity = hint.style.opacity = String(1 - clamp(s / (HOLD * vh)));
   const sideOp = reduced ? 0 : clamp((c - .3) / .08) * (1 - clamp((c - .7) / .08));
   sides.forEach(el => { el.style.opacity = String(sideOp); });
